@@ -1,8 +1,10 @@
+import { Footer } from "@/components/footer"
+import { NavBar } from "@/components/nav-bar"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toaster"
 import { ClerkProvider } from "@clerk/nextjs"
 import type { Metadata } from "next"
 import "./globals.css"
-import { NavBar } from "@/components/nav-bar"
 
 export const metadata: Metadata = {
   title: "Parole aux parents",
@@ -15,8 +17,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="fr">
         <body>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            {/* 90px */}
             <NavBar />
-            {children}
+            <main className="h-[calc(100vh-180px)] flex flex-col items-center justify-center">{children}</main>
+            <Toaster />
+            {/* 90xp */}
+            <Footer />
           </ThemeProvider>
         </body>
       </html>

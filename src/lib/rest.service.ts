@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma-client"
 import { Comment, Conseil, Question } from "@prisma/client"
 
 interface RestApi<T> {
-  create(data: T): Promise<T>
+  create(data: Omit<T, "id">): Promise<T>
   findById(id: string): Promise<T | null>
   findAll(): Promise<T[]>
   update(id: string, data: T): Promise<T | null>
@@ -10,7 +10,7 @@ interface RestApi<T> {
 }
 
 class ConseilService implements RestApi<Conseil> {
-  async create(data: Conseil): Promise<Conseil> {
+  async create(data: Omit<Conseil, "id">): Promise<Conseil> {
     return prisma.conseil.create({ data })
   }
 
@@ -30,10 +30,14 @@ class ConseilService implements RestApi<Conseil> {
     const deleteResult = await prisma.conseil.delete({ where: { id } })
     return !!deleteResult
   }
+
+  async findByPassword(password: string): Promise<Conseil | null> {
+    return prisma.conseil.findUnique({ where: { password } })
+  }
 }
 
 class QuestionService implements RestApi<Question> {
-  async create(data: Question): Promise<Question> {
+  async create(data: Omit<Question, "id">): Promise<Question> {
     return prisma.question.create({ data })
   }
 
@@ -56,7 +60,7 @@ class QuestionService implements RestApi<Question> {
 }
 
 class CommentService implements RestApi<Comment> {
-  async create(data: Comment): Promise<Comment> {
+  async create(data: Omit<Comment, "id">): Promise<Comment> {
     return prisma.comment.create({ data })
   }
 

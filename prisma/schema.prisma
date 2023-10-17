@@ -12,7 +12,7 @@ datasource db {
 
 model Conseil {
   id        String   @id @default(uuid())
-  password  String
+  password  String   @unique
   creator   String
   limit_time DateTime
   createdAt DateTime @default(now())
