@@ -14,6 +14,7 @@ model Conseil {
   id        String   @id @default(uuid())
   password  String   @unique
   creator   String
+  school_name String
   limit_time DateTime
   createdAt DateTime @default(now())
   Question  Question[]
@@ -21,11 +22,13 @@ model Conseil {
 
 model Question {
   id        String   @id @default(uuid())
+  title     String
   content   String
   author    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   nb_likes  Int
+  nb_reported Int
   comments  Comment[]
   conseil   Conseil   @relation(fields: [conseilId], references: [id])
   conseilId String
@@ -39,5 +42,6 @@ model Comment {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   nb_likes    Int
+  nb_reported Int
   question     Question @relation(fields: [questionId], references: [id])
 }

@@ -25,7 +25,7 @@ export function AccesConseilFrom({ setIsCreate }: { setIsCreate: (value: boolean
       description: "Vérification du mot de passe en cours ...",
     })
 
-    const response = await fetch("api/check-acces-key", {
+    const response = await fetch("/api/check-acces-key", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             {/* 90px */}
             <NavBar />
-            <main className="h-[calc(100vh-180px)] flex flex-col items-center justify-center">{children}</main>
+            <main className="min-h-[calc(100vh-180px)] flex flex-col items-center">{children}</main>
             <Toaster />
             {/* 90xp */}
             <Footer />

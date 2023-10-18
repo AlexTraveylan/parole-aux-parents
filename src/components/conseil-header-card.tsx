@@ -3,7 +3,7 @@ import { format } from "date-fns"
 import { fr } from "date-fns/locale"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
 
-export function ConseilHeaderCard({ conseil }: { conseil: Conseil }) {
+export async function ConseilHeaderCard({ conseil }: { conseil: Conseil }) {
   const formated_limit_date = format(conseil.limit_time, "PPP", { locale: fr })
 
   return (

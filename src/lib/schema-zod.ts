@@ -12,3 +12,12 @@ export const createConseil = z.object({
     .regex(regex_password, { message: "Le code doit contenir que des chiffres ou des lettres, au moins 2 lettres majuscules et 1 chiffre" }),
   limit_time: z.date(),
 })
+
+export const createQuestion = z.object({
+  title: z.string().min(4).max(256),
+  content: z.string().min(10).max(4048),
+})
+
+export const addingComment = z.object({
+  content: z.string().min(10).max(4048),
+})

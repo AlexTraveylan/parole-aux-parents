@@ -37,7 +37,7 @@ class ConseilService implements RestApi<Conseil> {
 }
 
 class QuestionService implements RestApi<Question> {
-  async create(data: Omit<Question, "id">): Promise<Question> {
+  async create(data: Omit<Question, "id" | "createdAt" | "updatedAt">): Promise<Question> {
     return prisma.question.create({ data })
   }
 
@@ -60,7 +60,7 @@ class QuestionService implements RestApi<Question> {
 }
 
 class CommentService implements RestApi<Comment> {
-  async create(data: Omit<Comment, "id">): Promise<Comment> {
+  async create(data: Omit<Comment, "id" | "createdAt" | "updatedAt">): Promise<Comment> {
     return prisma.comment.create({ data })
   }
 

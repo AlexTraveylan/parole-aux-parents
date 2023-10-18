@@ -32,7 +32,7 @@ export function CreateConseilFrom({ setIsCreate }: { setIsCreate: (value: boolea
       description: "Création en cours...",
     })
 
-    const response = await fetch("api/create-conseil", {
+    const response = await fetch("/api/create-conseil", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
