@@ -27,11 +27,11 @@ model Question {
   author    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  nb_likes  Int
-  nb_reported Int
   comments  Comment[]
   conseil   Conseil   @relation(fields: [conseilId], references: [id])
   conseilId String
+  likes Like[]
+  reports Report[]
 }
 
 model Comment {
@@ -41,7 +41,26 @@ model Comment {
   author      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  nb_likes    Int
-  nb_reported Int
+  is_reviewed Boolean @default(false)
   question     Question @relation(fields: [questionId], references: [id])
+  likes Like[]
+  reports Report[]
+}
+
+model Like {
+  id         String   @id @default(uuid())
+  author_id  String
+  question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
+  comment    Comment? @relation(fields: [commentId], references: [id])
+  commentId  String?
+}
+
+model Report {
+  id  String  @id @default(uuid())
+  author_id String
+  question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
+  comment    Comment? @relation(fields: [commentId], references: [id])
+  commentId  String?
 }

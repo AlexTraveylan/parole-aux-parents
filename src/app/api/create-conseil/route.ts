@@ -1,23 +1,31 @@
 import { conseilService } from "@/lib/rest.service"
+import { CreateConseil, createConseil } from "@/lib/schema-zod"
 import { currentUser } from "@clerk/nextjs"
 import { Conseil } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
-  const { password, limit_time } = await request.json()
+  const { password, limit_time, school_name } = await request.json()
+  let conseil_from_data: CreateConseil
+  try {
+    conseil_from_data = createConseil.parse({ password: password, limit_time: new Date(limit_time), school_name: school_name })
+  } catch {
+    return NextResponse.json({ message: "Données non valides" }, { status: 400 })
+  }
   const user = await currentUser()
 
-  if (!user || !password || !limit_time) {
+  if (!user) {
     return NextResponse.json({ message: "Vous devez être connecté" }, { status: 403 })
   }
 
   const author_name = `${user.firstName} ${user.lastName}`
 
   const conseil_data: Omit<Conseil, "id"> = {
-    password: password,
+    password: conseil_from_data.password,
     creator: author_name,
-    limit_time: new Date(limit_time),
+    limit_time: conseil_from_data.limit_time,
     createdAt: new Date(),
+    school_name: conseil_from_data.school_name,
   }
 
   try {

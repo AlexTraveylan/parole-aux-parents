@@ -24,6 +24,7 @@ export function CreateConseilFrom({ setIsCreate }: { setIsCreate: (value: boolea
     defaultValues: {
       password: "",
       limit_time: new Date(),
+      school_name: "",
     },
   })
 
@@ -37,7 +38,7 @@ export function CreateConseilFrom({ setIsCreate }: { setIsCreate: (value: boolea
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ password: values.password, limit_time: values.limit_time }),
+      body: JSON.stringify(values),
     })
 
     if (response.ok) {
@@ -66,6 +67,21 @@ export function CreateConseilFrom({ setIsCreate }: { setIsCreate: (value: boolea
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleCreateConseil)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="school_name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>École</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                  <FormDescription>Le nom de l'école concerné</FormDescription>
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="password"
