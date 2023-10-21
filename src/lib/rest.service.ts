@@ -97,6 +97,14 @@ class CommentService implements RestApi<Comment> {
     return prisma.comment.findMany()
   }
 
+  async findAllByQuestionId(question_id: string): Promise<Comment[]> {
+    return prisma.comment.findMany({
+      where: {
+        questionId: question_id,
+      },
+    })
+  }
+
   async update(id: string, data: Omit<Comment, "id">): Promise<Comment | null> {
     return prisma.comment.update({ where: { id }, data })
   }

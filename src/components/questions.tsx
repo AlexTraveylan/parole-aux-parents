@@ -1,15 +1,14 @@
 import { questionService } from "@/lib/rest.service"
+import { QuestionCard } from "./question-card"
 
 export async function Questions({ conseil_id }: { conseil_id: string }) {
   const questions = await questionService.findAll()
 
   return (
-    <ul>
+    <div>
       {questions.map((question, index) => (
-        <li key={index}>
-          {question.title} : {question.content} by {question.author}{" "}
-        </li>
+        <QuestionCard key={index} question={question} index={index} />
       ))}
-    </ul>
+    </div>
   )
 }
