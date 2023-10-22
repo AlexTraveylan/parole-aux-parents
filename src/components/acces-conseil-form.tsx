@@ -52,7 +52,7 @@ export function AccesConseilFrom({ setIsCreate }: { setIsCreate: (value: boolean
       <CardHeader>
         <CardTitle>Un espace est déjà crée ?</CardTitle>
         <CardDescription>
-          Accède à cette espace, lis les questions des autres parents, fait des commentaires, ajoute tes propres questions.
+          Accède à cette espace, lis les questions des autres parents, fait des commentaires, ajoute tes propres questions. Connexion requise.
         </CardDescription>
       </CardHeader>
       <CardContent>
