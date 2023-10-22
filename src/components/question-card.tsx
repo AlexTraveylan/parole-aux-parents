@@ -11,8 +11,8 @@ import { CommentBubble } from "./comment-bubble"
 
 export async function QuestionCard({ question, index }: { question: Question; index?: number }) {
   const isNotModified = question.createdAt.getTime() === question.updatedAt.getTime()
-  const createAtText = `Crée le ${format(question.createdAt, "PPP", { locale: fr })}`
-  const updatedAtText = `Modifiée le ${format(question.updatedAt, "PPP", { locale: fr })}`
+  const createAtText = `Crée le ${format(question.createdAt, "PP à h:mm", { locale: fr })}`
+  const updatedAtText = `Modifiée le ${format(question.updatedAt, "PPP à h:mm", { locale: fr })}`
   return (
     <Card className="min-w-[350px] w-screen max-w-[700px]">
       <CardHeader>

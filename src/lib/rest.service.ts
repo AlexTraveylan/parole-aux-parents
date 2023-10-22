@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma-client"
-import { Comment, Conseil, Like, Question, Report } from "@prisma/client"
+import { Comment, Conseil, History, Like, Question, Report } from "@prisma/client"
 
 interface RestApi<T> {
   create(data: Omit<T, "id">): Promise<T>
@@ -186,10 +186,46 @@ class ReportService implements RestApi<Report> {
   }
 }
 
+class HistoryService {
+  async create(history: Omit<History, "id">): Promise<History> {
+    const newHistory = await prisma.history.create({
+      data: {
+        user_id: history.user_id,
+      },
+    })
+    return newHistory
+  }
+
+  async addConseilToHistory(historyId: string, conseilId: string): Promise<History | null> {
+    const updatedHistory = await prisma.history.update({
+      where: { id: historyId },
+      data: {
+        conseil: {
+          connect: [{ id: conseilId }],
+        },
+      },
+    })
+    return updatedHistory
+  }
+
+  async removeConseilFromHistory(historyId: string, conseilId: string): Promise<History | null> {
+    const updatedHistory = await prisma.history.update({
+      where: { id: historyId },
+      data: {
+        conseil: {
+          disconnect: [{ id: conseilId }],
+        },
+      },
+    })
+    return updatedHistory
+  }
+}
+
 const conseilService = new ConseilService()
 const questionService = new QuestionService()
 const commentService = new CommentService()
 const likeService = new LikeService()
 const reportService = new ReportService()
+const historyService = new HistoryService()
 
-export { commentService, conseilService, likeService, questionService, reportService }
+export { commentService, conseilService, historyService, likeService, questionService, reportService }

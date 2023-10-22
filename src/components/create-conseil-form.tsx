@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { generateCode } from "@/lib/generate"
 import { createConseil } from "@/lib/schema-zod"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { fr } from "date-fns/locale"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, RefreshCcw } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -22,11 +23,16 @@ export function CreateConseilFrom({ setIsCreate }: { setIsCreate: (value: boolea
   const form = useForm<z.infer<typeof createConseil>>({
     resolver: zodResolver(createConseil),
     defaultValues: {
-      password: "",
+      password: generateCode(),
       limit_time: new Date(),
       school_name: "",
     },
   })
+
+  function handleGenerateCode() {
+    const newCode = generateCode()
+    form.setValue("password", newCode)
+  }
 
   async function handleCreateConseil(values: z.infer<typeof createConseil>) {
     toast({
@@ -92,7 +98,13 @@ export function CreateConseilFrom({ setIsCreate }: { setIsCreate: (value: boolea
                     <Input {...field} />
                   </FormControl>
                   <FormMessage />
-                  <FormDescription>Il sera à partager aux parents pour acceder à l'espace</FormDescription>
+                  <FormDescription className="flex gap-3">
+                    <div>Il sera à partager aux parents pour acceder à l'espace</div>
+                    <div className="flex gap-2 cursor-pointer" onClick={handleGenerateCode}>
+                      <RefreshCcw />
+                      <div>Générer un code</div>
+                    </div>
+                  </FormDescription>
                 </FormItem>
               )}
             />
