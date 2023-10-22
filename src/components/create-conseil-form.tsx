@@ -64,10 +64,11 @@ export function CreateConseilFrom({ setIsCreate }: { setIsCreate: (value: boolea
   return (
     <Card className="min-w-[350px] w-screen max-w-[700px]">
       <CardHeader>
-        <CardTitle>Création d'un espace questions.</CardTitle>
+        <CardTitle>{"Création d'un espace questions."}</CardTitle>
         <CardDescription>
-          Un espace colaboratif pour préparer un conseil d'école, poser des questions, voir celles des autres, faire des commentaires. Et ainsi
-          préparer au mieux ce moment, pour que la parole de chacun soit entendue. Vous devez être connecté pour créer un espace.
+          {
+            "Un espace colaboratif pour préparer un conseil d'école, poser des questions, voir celles des autres, faire des commentaires. Et ainsi préparer au mieux ce moment, pour que la parole de chacun soit entendue. Vous devez être connecté pour créer un espace."
+          }
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -83,7 +84,7 @@ export function CreateConseilFrom({ setIsCreate }: { setIsCreate: (value: boolea
                     <Input {...field} />
                   </FormControl>
                   <FormMessage />
-                  <FormDescription>Le nom de l'école concerné</FormDescription>
+                  <FormDescription>{"Le nom de l'école concerné"}</FormDescription>
                 </FormItem>
               )}
             />
@@ -99,10 +100,10 @@ export function CreateConseilFrom({ setIsCreate }: { setIsCreate: (value: boolea
                   </FormControl>
                   <FormMessage />
                   <FormDescription className="flex gap-3">
-                    <div>Il sera à partager aux parents pour acceder à l'espace</div>
+                    <div>{"Il sera à partager aux parents pour acceder à l'espace"}</div>
                     <div className="flex gap-2 cursor-pointer" onClick={handleGenerateCode}>
                       <RefreshCcw />
-                      <div>Générer un code</div>
+                      <div>{"Générer un code"}</div>
                     </div>
                   </FormDescription>
                 </FormItem>

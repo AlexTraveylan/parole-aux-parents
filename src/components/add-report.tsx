@@ -38,7 +38,7 @@ export function AddReport({ question_id, target }: { question_id: string; target
 
   useEffect(() => {
     getReports()
-  }, [])
+  }, [getReports])
 
   if (isReported) {
     return <Flag className="text-red-800" onClick={handleToogleLike} />

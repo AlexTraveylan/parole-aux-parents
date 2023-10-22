@@ -43,7 +43,7 @@ export function AddLike({ question_id, target }: { question_id: string; target: 
 
   useEffect(() => {
     getlikes()
-  }, [])
+  }, [getlikes])
 
   return (
     <div className="flex gap-2 items-center">

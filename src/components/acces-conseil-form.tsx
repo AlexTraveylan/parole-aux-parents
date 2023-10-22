@@ -68,7 +68,7 @@ export function AccesConseilFrom({ setIsCreate }: { setIsCreate: (value: boolean
                     <Input {...field} />
                   </FormControl>
                   <FormMessage />
-                  <FormDescription>Partagé par le parent qui a crée l'espace</FormDescription>
+                  <FormDescription>{"Partagé par le parent qui a crée l'espace"}</FormDescription>
                 </FormItem>
               )}
             />
