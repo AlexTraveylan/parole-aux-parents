@@ -187,6 +187,10 @@ class ReportService implements RestApi<Report> {
 }
 
 class HistoryService {
+  async findByUserId(user_id: string): Promise<History | null> {
+    return prisma.history.findUnique({ where: { user_id: user_id } })
+  }
+
   async create(history: Omit<History, "id">): Promise<History> {
     const newHistory = await prisma.history.create({
       data: {
@@ -218,6 +222,21 @@ class HistoryService {
       },
     })
     return updatedHistory
+  }
+
+  async getConseilsFromHistory(user_id: string): Promise<Conseil[]> {
+    const history = await prisma.history.findUnique({
+      where: { user_id: user_id },
+      include: {
+        conseil: true,
+      },
+    })
+
+    if (history) {
+      return history.conseil
+    } else {
+      return []
+    }
   }
 }
 

@@ -14,8 +14,8 @@ export default async function ConseilPage({ params }: { params: { id: string } }
   return (
     <>
       <ConseilHeaderCard conseil={curent_conseil} />
-      <CreateQuestionForm conseil_id={curent_conseil.id} />
       <Questions conseil_id={curent_conseil.id} />
+      <CreateQuestionForm conseil_id={curent_conseil.id} />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { conseilService } from "@/lib/rest.service"
+import { conseilService, historyService } from "@/lib/rest.service"
 import { CreateConseil, createConseil } from "@/lib/schema-zod"
 import { currentUser } from "@clerk/nextjs"
 import { Conseil } from "@prisma/client"
@@ -34,6 +34,12 @@ export async function POST(request: NextRequest) {
     if (!new_conseil) {
       return NextResponse.json({ message: "échec de la création" }, { status: 400 })
     }
+
+    let user_history = await historyService.findByUserId(user.id)
+    if (!user_history) {
+      user_history = await historyService.create({ user_id: user.id })
+    }
+    await historyService.addConseilToHistory(user_history.id, new_conseil.id)
 
     return NextResponse.json({ message: "Création réussie", conseil_id: new_conseil.id }, { status: 201 })
   } catch {

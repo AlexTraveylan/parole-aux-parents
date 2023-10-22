@@ -68,6 +68,6 @@ model Report {
 
 model History {
   id String @id @default(uuid())
-  user_id String
+  user_id String @unique
   conseil Conseil[] 
 }
