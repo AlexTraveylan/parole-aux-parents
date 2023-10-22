@@ -9,7 +9,7 @@ export default function AuthBtn() {
       </SignedIn>
       <SignedOut>
         <SignInButton mode="modal">
-          <Button variant={"outline"}>Sign in</Button>
+          <Button variant={"outline"}>Se connecter</Button>
         </SignInButton>
       </SignedOut>
     </>
