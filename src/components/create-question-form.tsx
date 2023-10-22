@@ -73,7 +73,7 @@ export function CreateQuestionForm({ conseil_id }: { conseil_id: string }) {
       </Card>
       <Card className="min-w-[350px] w-screen max-w-[700px] px-5">
         <CardHeader>
-          <CardTitle className="text-center">Ajout d'une nouvelle question</CardTitle>
+          <CardTitle className="text-center">{"Ajout d'une nouvelle question"}</CardTitle>
           <CardDescription className="text-center">Exprimez-vous</CardDescription>
         </CardHeader>
         <Form {...form}>
