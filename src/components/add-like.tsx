@@ -6,12 +6,12 @@ import { useEffect, useState } from "react"
 import { ThumbsUp } from "../../node_modules/lucide-react"
 import { toast } from "./ui/use-toast"
 
-export function AddLike({ question_id }: { question_id: string }) {
+export function AddLike({ question_id, target }: { question_id: string; target: "question" | "comment" }) {
   const [isLiked, setIsLiked] = useState(false)
   const [nbLikes, setNbLikes] = useState(0)
 
   async function getlikes() {
-    const reponse = await fetch(`/api/likes/question/${question_id}/getAll`)
+    const reponse = await fetch(`/api/likes/${target}/${question_id}/getAll`)
 
     if (!reponse.ok) {
       toast({
@@ -26,7 +26,10 @@ export function AddLike({ question_id }: { question_id: string }) {
   }
 
   async function handleToogleLike() {
-    const reponse = await fetch(`/api/likes/question/${question_id}/action`)
+    const preview = isLiked ? -1 : 1
+    setIsLiked(!isLiked)
+    setNbLikes(nbLikes + preview)
+    const reponse = await fetch(`/api/likes/${target}/${question_id}/action`)
 
     if (!reponse.ok) {
       toast({

@@ -55,7 +55,7 @@ export function AddCommentForm({ question_id }: { question_id: string }) {
             name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nouveau commentaire</FormLabel>
+                <FormLabel>Écrire un commentaire</FormLabel>
                 <FormControl>
                   <Textarea {...field} rows={5} />
                 </FormControl>
@@ -63,7 +63,7 @@ export function AddCommentForm({ question_id }: { question_id: string }) {
               </FormItem>
             )}
           />
-          <Button type="submit">Laisser un commentaire</Button>
+          <Button type="submit">Ajouter un commentaire</Button>
         </form>
       </Form>
     </Card>

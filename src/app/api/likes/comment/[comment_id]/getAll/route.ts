@@ -1,4 +1,4 @@
-import { questionService } from "@/lib/rest.service"
+import { commentService } from "@/lib/rest.service"
 import { auth } from "@clerk/nextjs"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest, { params }: { params: { comment_
     return NextResponse.json({ message: "Connexion requise." }, { status: 403 })
   }
 
-  const likes = await questionService.getQuestionLikes(params.comment_id)
+  const likes = await commentService.getCommentLikes(params.comment_id)
 
   const user_like = likes?.likes.find((like) => like.author_id == userId && like.commentId == params.comment_id)
 

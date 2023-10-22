@@ -40,8 +40,8 @@ export async function QuestionCard({ question, index }: { question: Question; in
         <Link href={`/questions/${question.id}`}>
           <CommentBubble question_id={question.id} />
         </Link>
-        <AddLike question_id={question.id} />
-        <AddReport question_id={question.id} />
+        <AddLike question_id={question.id} target="question" />
+        <AddReport question_id={question.id} target="question" />
       </CardFooter>
     </Card>
   )

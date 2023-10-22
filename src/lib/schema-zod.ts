@@ -7,9 +7,9 @@ export const accesConseil = z.object({
 })
 
 export const createConseil = z.object({
-  password: z
-    .string()
-    .regex(regex_password, { message: "Le code doit contenir que des chiffres ou des lettres, au moins 2 lettres majuscules et 1 chiffre" }),
+  password: z.string().regex(regex_password, {
+    message: "Le code doit contenir 8 caractèresavec des chiffres ou des lettres, au moins 2 lettres majuscules et 1 chiffre",
+  }),
   limit_time: z.date(),
   school_name: z.string().min(5).max(128),
 })

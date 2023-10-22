@@ -1,4 +1,4 @@
-import { likeService, questionService } from "@/lib/rest.service"
+import { commentService, likeService } from "@/lib/rest.service"
 import { auth } from "@clerk/nextjs"
 import { Like } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest, { params }: { params: { comment_
     return NextResponse.json({ message: "Connexion requise." }, { status: 403 })
   }
 
-  const likes = await questionService.getQuestionLikes(params.comment_id)
+  const likes = await commentService.getCommentLikes(params.comment_id)
 
   const user_likes = likes?.likes.find((like) => like.author_id == userId)
 
