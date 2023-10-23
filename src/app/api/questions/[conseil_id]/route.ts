@@ -1,6 +1,7 @@
+import { currentUser } from "@/lib/auth"
 import { questionService } from "@/lib/rest.service"
 import { CreateQuestion, createQuestion } from "@/lib/schema-zod"
-import { currentUser } from "@clerk/nextjs"
+
 import { Question } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -14,18 +15,16 @@ export async function POST(request: NextRequest, { params }: { params: { conseil
     return NextResponse.json({ message: "Données non valides" }, { status: 400 })
   }
 
-  const user = await currentUser()
+  const { user_id, user_name } = currentUser()
 
-  if (!title || !content || !user || !params.conseil_id) {
+  if (!title || !content || !user_id || !user_name || !params.conseil_id) {
     return NextResponse.json({ message: "Informations manquantes" }, { status: 400 })
   }
-
-  const author_name = `${user.firstName} ${user.lastName}`
 
   const new_question: Omit<Question, "id" | "createdAt" | "updatedAt"> = {
     title: conseil_from_data.title,
     content: conseil_from_data.content,
-    author: author_name,
+    author: user_name,
     conseilId: params.conseil_id,
   }
 

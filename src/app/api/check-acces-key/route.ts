@@ -1,12 +1,12 @@
+import { currentUser } from "@/lib/auth"
 import { conseilService, historyService } from "@/lib/rest.service"
-import { auth } from "@clerk/nextjs"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
-  const { userId } = auth()
+  const { user_id, user_name } = currentUser()
   const { password } = await request.json()
 
-  if (!userId) {
+  if (!user_id) {
     return NextResponse.json({ message: "Connexion requise" }, { status: 403 })
   }
 
@@ -20,9 +20,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Ressource inaccessible" }, { status: 400 })
   }
 
-  let user_history = await historyService.findByUserId(userId)
+  let user_history = await historyService.findByUserId(user_id)
   if (!user_history) {
-    user_history = await historyService.create({ user_id: userId })
+    user_history = await historyService.create({ user_id: user_id })
   }
   await historyService.addConseilToHistory(user_history.id, conseil_requested.id)
 

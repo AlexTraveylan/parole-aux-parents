@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma-client"
-import { Comment, Conseil, History, Like, Question, Report } from "@prisma/client"
+import { Comment, Conseil, History, Like, Question, Report, User } from "@prisma/client"
 
 interface RestApi<T> {
   create(data: Omit<T, "id">): Promise<T>
@@ -240,11 +240,61 @@ class HistoryService {
   }
 }
 
+class UserService implements RestApi<User> {
+  async create(user: Omit<User, "id">): Promise<User> {
+    const newUser = await prisma.user.create({ data: user })
+    return newUser
+  }
+
+  async findById(user_id: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: user_id,
+      },
+    })
+    return user
+  }
+
+  async findByUserName(username: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        username: username,
+      },
+    })
+    return user
+  }
+
+  async findAll(): Promise<User[]> {
+    const users = await prisma.user.findMany()
+    return users
+  }
+
+  async update(user_id: string, user: Omit<User, "id">): Promise<User | null> {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: user_id,
+      },
+      data: user,
+    })
+    return updatedUser
+  }
+
+  async delete(user_id: string): Promise<boolean> {
+    const deletedUser = await prisma.user.delete({
+      where: {
+        id: user_id,
+      },
+    })
+
+    return !!deletedUser
+  }
+}
 const conseilService = new ConseilService()
 const questionService = new QuestionService()
 const commentService = new CommentService()
 const likeService = new LikeService()
 const reportService = new ReportService()
 const historyService = new HistoryService()
+const userService = new UserService()
 
-export { commentService, conseilService, historyService, likeService, questionService, reportService }
+export { commentService, conseilService, historyService, likeService, questionService, reportService, userService }

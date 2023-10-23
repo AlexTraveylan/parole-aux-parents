@@ -1,6 +1,7 @@
+import { currentUser } from "@/lib/auth"
 import { commentService } from "@/lib/rest.service"
 import { AddingComment, addingComment } from "@/lib/schema-zod"
-import { currentUser } from "@clerk/nextjs"
+
 import { Comment } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -14,17 +15,15 @@ export async function POST(request: NextRequest, { params }: { params: { questio
     return NextResponse.json({ message: "Données non valides" }, { status: 400 })
   }
 
-  const user = await currentUser()
+  const { user_id, user_name } = currentUser()
 
-  if (!content || !user || !params.question_id) {
+  if (!content || !user_id || !user_name || !params.question_id) {
     return NextResponse.json({ message: "Informations manquantes" }, { status: 400 })
   }
 
-  const author_name = `${user.firstName} ${user.lastName}`
-
   const new_comment: Omit<Comment, "id" | "createdAt" | "updatedAt" | "is_reviewed"> = {
-    content: String(content),
-    author: author_name,
+    content: conseil_from_data.content,
+    author: user_name,
     questionId: params.question_id,
   }
 

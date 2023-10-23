@@ -1,4 +1,4 @@
-import AuthBtn from "@/components/auth-btn"
+import { AuthBtn } from "@/components/auth-btn"
 import { SwitchTheme } from "@/components/switch-theme"
 import Image from "next/image"
 import Link from "next/link"

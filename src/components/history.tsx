@@ -1,16 +1,16 @@
+import { currentUser } from "@/lib/auth"
 import { historyService } from "@/lib/rest.service"
-import { auth } from "@clerk/nextjs"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { HistoryLine } from "./history-line"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 
 export async function History() {
-  const { userId } = auth()
+  const { user_id, user_name } = currentUser()
 
-  if (!userId) {
+  if (!user_id) {
     return <></>
   }
 
-  const conseils = await historyService.getConseilsFromHistory(userId)
+  const conseils = await historyService.getConseilsFromHistory(user_id)
 
   if (conseils?.length == 0) {
     return <></>

@@ -1,6 +1,7 @@
+import { currentUser } from "@/lib/auth"
 import { conseilService, historyService } from "@/lib/rest.service"
 import { CreateConseil, createConseil } from "@/lib/schema-zod"
-import { currentUser } from "@clerk/nextjs"
+
 import { Conseil } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -12,17 +13,15 @@ export async function POST(request: NextRequest) {
   } catch {
     return NextResponse.json({ message: "Données non valides" }, { status: 400 })
   }
-  const user = await currentUser()
+  const { user_id, user_name } = currentUser()
 
-  if (!user) {
+  if (!user_id || !user_name) {
     return NextResponse.json({ message: "Vous devez être connecté" }, { status: 403 })
   }
 
-  const author_name = `${user.firstName} ${user.lastName}`
-
   const conseil_data: Omit<Conseil, "id"> = {
     password: conseil_from_data.password,
-    creator: author_name,
+    creator: user_name,
     limit_time: conseil_from_data.limit_time,
     createdAt: new Date(),
     school_name: conseil_from_data.school_name,
@@ -35,9 +34,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "échec de la création" }, { status: 400 })
     }
 
-    let user_history = await historyService.findByUserId(user.id)
+    let user_history = await historyService.findByUserId(user_id)
     if (!user_history) {
-      user_history = await historyService.create({ user_id: user.id })
+      user_history = await historyService.create({ user_id: user_id })
     }
     await historyService.addConseilToHistory(user_history.id, new_conseil.id)
 

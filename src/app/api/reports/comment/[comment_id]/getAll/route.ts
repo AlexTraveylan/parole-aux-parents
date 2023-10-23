@@ -1,5 +1,5 @@
+import { currentUser } from "@/lib/auth"
 import { commentService } from "@/lib/rest.service"
-import { auth } from "@clerk/nextjs"
 import { NextRequest, NextResponse } from "next/server"
 
 export type GetReportType = {
@@ -8,15 +8,15 @@ export type GetReportType = {
 }
 
 export async function GET(request: NextRequest, { params }: { params: { comment_id: string } }) {
-  const { userId } = auth()
+  const { user_id, user_name } = currentUser()
 
-  if (!userId || !params.comment_id) {
+  if (!user_id || !params.comment_id) {
     return NextResponse.json({ message: "Connexion requise." }, { status: 403 })
   }
 
   const reports = await commentService.getCommentReports(params.comment_id)
 
-  const user_report = reports?.reports.find((report) => report.author_id == userId && report.commentId == params.comment_id)
+  const user_report = reports?.reports.find((report) => report.author_id == user_id && report.commentId == params.comment_id)
 
   return NextResponse.json({ message: "Récupération des reports ok", isReported: user_report ? true : false })
 }

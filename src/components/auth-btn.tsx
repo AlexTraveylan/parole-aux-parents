@@ -1,17 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
+import { currentUser } from "@/lib/auth"
 
-export default function AuthBtn() {
-  return (
-    <>
-      <SignedIn>
-        <UserButton afterSignOutUrl="/" userProfileUrl="/profile" />
-      </SignedIn>
-      <SignedOut>
-        <SignInButton mode="modal">
-          <Button variant={"outline"}>Se connecter</Button>
-        </SignInButton>
-      </SignedOut>
-    </>
-  )
+export async function AuthBtn() {
+  const { user_id, user_name } = currentUser()
+  if (!user_id) {
+    return <div>Non connecté</div>
+  }
+  return <div>{user_name}</div>
 }

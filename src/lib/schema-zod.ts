@@ -37,3 +37,13 @@ export const addingComment = z.object({
 export type AddingComment = {
   content: string
 }
+
+export const createUser = z.object({
+  username: z.string().min(4).max(64),
+  password: z.string().min(6).max(20),
+})
+
+export type CreateUser = {
+  username: string
+  password: string
+}

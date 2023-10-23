@@ -1,22 +1,22 @@
+import { currentUser } from "@/lib/auth"
 import { questionService, reportService } from "@/lib/rest.service"
-import { auth } from "@clerk/nextjs"
 import { Report } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest, { params }: { params: { question_id: string } }) {
-  const { userId } = auth()
+  const { user_id, user_name } = currentUser()
 
-  if (!userId || !params.question_id) {
+  if (!user_id || !params.question_id) {
     return NextResponse.json({ message: "Connexion requise." }, { status: 403 })
   }
 
   const reports = await questionService.getQuestionReports(params.question_id)
 
-  const user_reports = reports?.reports.find((report) => report.author_id == userId)
+  const user_reports = reports?.reports.find((report) => report.author_id == user_id)
 
   if (!user_reports) {
     const data_report: Omit<Report, "id"> = {
-      author_id: userId,
+      author_id: user_id,
       questionId: params.question_id,
       commentId: null,
     }

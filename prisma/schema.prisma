@@ -71,3 +71,9 @@ model History {
   user_id String @unique
   conseil Conseil[] 
 }
+
+model User {
+  id  String  @id @default(uuid())
+  username String @unique
+  password  String
+}
