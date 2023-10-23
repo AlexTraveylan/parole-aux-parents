@@ -57,7 +57,7 @@ export function SignInForm({ setIsLogin }: { setIsLogin: Dispatch<SetStateAction
     <Card className="min-w-[350px] w-screen max-w-[700px] my-5">
       <CardHeader>
         <CardTitle>Créer un compte</CardTitle>
-        <CardDescription>Si vous n'avez pas de compte, c'est ici pour le créer.</CardDescription>
+        <CardDescription>{"Si vous n'avez pas de compte, c'est ici pour le créer."}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
