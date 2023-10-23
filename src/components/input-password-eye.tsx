@@ -16,3 +16,5 @@ export const InputEye = React.forwardRef<HTMLInputElement, InputProps>(({ classN
     </div>
   )
 })
+
+InputEye.displayName = "InputEye"
