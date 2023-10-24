@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
   let user_from_data: CreateUser
   try {
-    user_from_data = createUser.parse({ username: username, password: hashedPassword })
+    user_from_data = createUser.parse({ username: username, password: "jepeuxpastestca" })
   } catch {
     return NextResponse.json({ message: "Echec de la connexion" }, { status: 400 })
   }

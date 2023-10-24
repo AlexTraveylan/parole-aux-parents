@@ -49,6 +49,10 @@ class QuestionService implements RestApi<Question> {
     return prisma.question.findMany()
   }
 
+  async findAllByConseilId(conseilId: string): Promise<Question[]> {
+    return prisma.question.findMany({ where: { conseilId: conseilId } })
+  }
+
   async update(id: string, data: Omit<Question, "id">): Promise<Question | null> {
     return prisma.question.update({ where: { id }, data })
   }

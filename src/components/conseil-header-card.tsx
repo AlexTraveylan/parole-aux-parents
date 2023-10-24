@@ -12,7 +12,10 @@ export async function ConseilHeaderCard({ conseil }: { conseil: Conseil }) {
         <CardTitle>{conseil.password}</CardTitle>
         <CardDescription>Code à partager</CardDescription>
       </CardHeader>
-      <CardContent>Fin des questions : {formated_limit_date}</CardContent>
+      <CardContent className="flex flex-col">
+        <div>École : {conseil.school_name}</div>
+        <div>Fin des questions : {formated_limit_date}</div>
+      </CardContent>
       <CardFooter>Créateur : {conseil.creator}</CardFooter>
     </Card>
   )

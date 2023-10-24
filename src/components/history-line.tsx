@@ -23,7 +23,7 @@ export function HistoryLine({ conseil }: { conseil: Conseil }) {
   return (
     <div className="flex gap-5">
       <Trash onClick={handleDelete} className="text-red-800 cursor-pointer" />
-      <Link href={`conseils/${conseil.password}`}>
+      <Link href={`conseils/${conseil.id}`}>
         {conseil.school_name} : {conseil.password}
       </Link>
     </div>
