@@ -26,7 +26,7 @@ export async function QuestionCard({ question, index }: { question: Question; in
           </CardTitle>
         )}
         <CardDescription className="flex flex-col gap-2">
-          <div className="text-center">Sujet : {question.title}</div>
+          <div className="text-center">{question.title}</div>
           <div className="flex justify-around">
             <div>{question.author}</div>
             <div>{isNotModified ? createAtText : updatedAtText}</div>

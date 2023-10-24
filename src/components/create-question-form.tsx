@@ -43,6 +43,7 @@ export function CreateQuestionForm({ conseil_id }: { conseil_id: string }) {
         description: "Succes",
       })
       setIsCreateQuestion(false)
+      form.reset()
       router.refresh()
     } else {
       toast({
