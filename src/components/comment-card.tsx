@@ -1,4 +1,5 @@
 import { CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card"
+import { currentUser } from "@/lib/auth"
 import { Comment } from "@prisma/client"
 import { format } from "date-fns"
 import { fr } from "date-fns/locale"
@@ -8,6 +9,7 @@ import { AddReport } from "./add-report"
 import { Card, CardTitle } from "./ui/card"
 
 export async function CommentCard({ comment }: { comment: Comment }) {
+  const { user_id, user_name } = currentUser()
   const isNotModified = comment.createdAt.getTime() === comment.updatedAt.getTime()
   const createAtText = `Crée le ${format(comment.createdAt, "PP à h:mm", { locale: fr })}`
   const updatedAtText = `Modifiée le ${format(comment.updatedAt, "PP à h:mm", { locale: fr })}`
@@ -15,7 +17,10 @@ export async function CommentCard({ comment }: { comment: Comment }) {
     <Card className="min-w-[350px] w-screen max-w-[700px]">
       <CardHeader>
         <CardTitle>{comment.author}</CardTitle>
-        <CardDescription>{isNotModified ? createAtText : updatedAtText}</CardDescription>
+        <CardDescription>
+          <div>{isNotModified ? createAtText : updatedAtText}</div>
+          {!user_id && <div>{"MODE OBSERVATEUR : Impossible de like ou commenter sans connexion."}</div>}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Markdown>{comment.content}</Markdown>

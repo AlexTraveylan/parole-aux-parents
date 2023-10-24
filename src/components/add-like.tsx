@@ -26,9 +26,6 @@ export function AddLike({ question_id, target }: { question_id: string; target: 
   }
 
   async function handleToogleLike() {
-    const preview = isLiked ? -1 : 1
-    setIsLiked(!isLiked)
-    setNbLikes(nbLikes + preview)
     const reponse = await fetch(`/api/likes/${target}/${question_id}/action`)
 
     if (!reponse.ok) {

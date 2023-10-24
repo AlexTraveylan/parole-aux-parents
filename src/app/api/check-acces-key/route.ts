@@ -6,10 +6,6 @@ export async function POST(request: NextRequest) {
   const { user_id, user_name } = currentUser()
   const { password } = await request.json()
 
-  if (!user_id) {
-    return NextResponse.json({ message: "Connexion requise" }, { status: 403 })
-  }
-
   if (!password) {
     return NextResponse.json({ message: "Pas de code reçu" }, { status: 400 })
   }
@@ -20,11 +16,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Ressource inaccessible" }, { status: 400 })
   }
 
-  let user_history = await historyService.findByUserId(user_id)
-  if (!user_history) {
-    user_history = await historyService.create({ user_id: user_id })
+  if (user_id) {
+    let user_history = await historyService.findByUserId(user_id)
+    if (!user_history) {
+      user_history = await historyService.create({ user_id: user_id })
+    }
+    await historyService.addConseilToHistory(user_history.id, conseil_requested.id)
   }
-  await historyService.addConseilToHistory(user_history.id, conseil_requested.id)
 
   return NextResponse.json({ message: "Conseil récupéré", conseil_id: conseil_requested.id }, { status: 200 })
 }

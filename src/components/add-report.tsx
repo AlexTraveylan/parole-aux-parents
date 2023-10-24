@@ -23,7 +23,6 @@ export function AddReport({ question_id, target }: { question_id: string; target
   }
 
   async function handleToogleLike() {
-    setIsReported(!isReported) // Preview
     const reponse = await fetch(`/api/reports/${target}/${question_id}/action`)
 
     if (!reponse.ok) {
