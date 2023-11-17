@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { toast } from "./ui/use-toast"
 
-export function AccesConseilFrom({ setIsCreate }: { setIsCreate: (value: boolean) => void }) {
+export function AccesConseilForm({ setIsCreate }: { setIsCreate: (value: boolean) => void }) {
   const router = useRouter()
 
   const form = useForm<z.infer<typeof accesConseil>>({

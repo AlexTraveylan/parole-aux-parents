@@ -1,15 +1,11 @@
-import { currentUser } from "@/lib/auth"
-import Link from "next/link"
-import { Button } from "./ui/button"
+import { getAuthSession } from "@/lib/auth"
+import { LoginButton, LogoutButton } from "./login-button"
 
 export async function AuthBtn() {
-  const { user_id, user_name } = currentUser()
-  if (!user_id) {
-    return (
-      <Link href={"/"}>
-        <Button>Se connecter</Button>
-      </Link>
-    )
+  const session = await getAuthSession()
+
+  if (session) {
+    return <LogoutButton />
   }
-  return <div>{user_name}</div>
+  return <LoginButton />
 }

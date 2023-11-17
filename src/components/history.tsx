@@ -1,16 +1,16 @@
-import { currentUser } from "@/lib/auth"
+import { getAuthSession } from "@/lib/auth"
 import { historyService } from "@/lib/rest.service"
 import { HistoryLine } from "./history-line"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 
 export async function History() {
-  const { user_id, user_name } = currentUser()
+  const session = await getAuthSession()
 
-  if (!user_id) {
+  if (!session?.user.id) {
     return <></>
   }
 
-  const conseils = await historyService.getConseilsFromHistory(user_id)
+  const conseils = await historyService.getConseilsFromHistory(session.user.id)
 
   if (conseils?.length == 0) {
     return <></>

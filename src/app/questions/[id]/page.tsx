@@ -3,11 +3,11 @@ import { CommentCard } from "@/components/comment-card"
 import { QuestionCard } from "@/components/question-card"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { currentUser } from "@/lib/auth"
+import { getAuthSession } from "@/lib/auth"
 import { commentService, questionService } from "@/lib/rest.service"
 
 export default async function QuestionsPage({ params }: { params: { id: string } }) {
-  const { user_id, user_name } = currentUser()
+  const session = await getAuthSession()
   const curent_question = await questionService.findById(params.id)
   if (!curent_question) {
     throw new Error("Pas d'acces ou pas de question")
@@ -24,7 +24,7 @@ export default async function QuestionsPage({ params }: { params: { id: string }
             <CommentCard comment={comment} />
           </div>
         ))}
-      {user_id ? (
+      {session?.user?.id ? (
         <AddCommentForm question_id={params.id} />
       ) : (
         <Card className="min-w-[350px] w-screen max-w-[700px] text-center p-5">{"Impossible d'ajouter des commentaires sans connexion"}</Card>

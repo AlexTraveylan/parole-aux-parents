@@ -1,9 +1,8 @@
-import { currentUser } from "@/lib/auth"
+import { getRequiredAuthSession } from "@/lib/auth"
 import { conseilService, historyService } from "@/lib/rest.service"
 import { NextRequest, NextResponse } from "next/server"
-
 export async function POST(request: NextRequest) {
-  const { user_id, user_name } = currentUser()
+  const session = await getRequiredAuthSession()
   const { password } = await request.json()
 
   if (!password) {
@@ -16,10 +15,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Ressource inaccessible" }, { status: 400 })
   }
 
-  if (user_id) {
-    let user_history = await historyService.findByUserId(user_id)
+  if (session.user.id) {
+    let user_history = await historyService.findByUserId(session.user.id)
     if (!user_history) {
-      user_history = await historyService.create({ user_id: user_id })
+      user_history = await historyService.create({ user_id: session.user.id })
     }
     await historyService.addConseilToHistory(user_history.id, conseil_requested.id)
   }

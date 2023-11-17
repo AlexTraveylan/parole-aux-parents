@@ -1,17 +1,16 @@
-import { currentUser } from "@/lib/auth"
+import { getRequiredAuthSession } from "@/lib/auth"
 import { historyService } from "@/lib/rest.service"
 import { NextRequest, NextResponse } from "next/server"
-
 export async function GET(request: NextRequest, { params }: { params: { conseil_id: string } }) {
-  const { user_id, user_name } = currentUser()
+  const session = await getRequiredAuthSession()
 
-  if (!user_id || !params.conseil_id) {
+  if (!session.user.id || !params.conseil_id) {
     return NextResponse.json({ message: "Informations manquantes" }, { status: 403 })
   }
 
-  const user_history = await historyService.findByUserId(user_id)
+  const user_history = await historyService.findByUserId(session.user.id)
 
-  if (user_history?.user_id != user_id) {
+  if (user_history?.user_id != session.user.id) {
     return NextResponse.json({ message: "Pas le bon user" }, { status: 403 })
   }
 

@@ -1,25 +1,16 @@
-import { verifyAccessToken } from "@/lib/auth.service"
-import { cookies } from "next/headers"
+import { getServerSession } from "next-auth"
+import { authConfig } from "../../pages/api/auth/[...nextauth]"
 
-export const currentUser: () => { user_id: string | null; user_name?: string | null } = () => {
-  const cookieStore = cookies()
-  const accessToken = cookieStore.get("accessToken")
+export const getAuthSession = () => {
+  return getServerSession(authConfig)
+}
 
-  let user_id = null
-  let user_name = null
+export const getRequiredAuthSession = async () => {
+  const session = await getAuthSession()
 
-  if (!accessToken) {
-    return { user_id, user_name }
+  if (!session?.user?.id) {
+    throw new Error("Session not found")
   }
 
-  const payload = verifyAccessToken(accessToken.value)
-  if (!payload) {
-    return { user_id, user_name }
-  }
-
-  const { userId, userName } = payload
-  user_id = userId
-  user_name = userName
-
-  return { user_id, user_name }
+  return session
 }
