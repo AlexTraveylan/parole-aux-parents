@@ -16,8 +16,8 @@ const emailPassword = process.env.EMAIL_SERVER_PASSWORD
 const emailHost = process.env.EMAIL_SERVER_HOST
 const emailPort = process.env.EMAIL_SERVER_PORT
 const emailFrom = process.env.EMAIL_FROM
-const twitterId = process.env.TWITTER_CLIENT_ID
-const twitterSecret = process.env.TWITTER_CLIENT_SECRET
+const twitterId = process.env.TWITTER_CONSUMER_KEY
+const twitterSecret = process.env.TWITTER_CONSUMER_SECRET
 
 if (
   !githubId ||
