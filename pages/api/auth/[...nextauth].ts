@@ -59,6 +59,7 @@ export const authConfig = {
     TwitterProvider({
       clientId: twitterId,
       clientSecret: twitterSecret,
+      version: "2.0", // opt-in to Twitter OAuth 2.0
     }),
   ],
   callbacks: {
